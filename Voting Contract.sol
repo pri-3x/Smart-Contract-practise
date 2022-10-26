@@ -16,16 +16,18 @@ contract Ballot {
         uint voteCount; 
     }
 
+    Proposal[] public proposals; /*displays names and vote count of the candidates*/
+
     address public chairperson;
 
     
     mapping(address => Voter) public voters;
 
     
-    Proposal[] public proposals;
+    
 
    
-    constructor(string[] memory proposalNames) {
+    constructor(string[] memory proposalNames) { /*enter the names of all the candidates*/
         chairperson = msg.sender;
         voters[chairperson].weight = 1;
 
@@ -40,7 +42,8 @@ contract Ballot {
     }
 
     
-    function giveRightToVote(address voter) external {
+    function giveRightToVote(address voter) external { /*this function will give right to vote to the a particular address,note that the person hasnt voted before*/
+
        
         require(
             msg.sender == chairperson,
@@ -55,8 +58,8 @@ contract Ballot {
     }
 
     
-    function delegate(address to) external {
-        // assigns reference
+    function delegate(address to) external {/*this function will right to vote to another address on their behalf*/
+        
         Voter storage sender = voters[msg.sender];
         require(sender.weight != 0, "You have no right to vote");
         require(!sender.voted, "You already voted.");
@@ -90,7 +93,7 @@ contract Ballot {
     }
 
     
-    function vote(uint proposal) external {
+    function vote(uint proposal) external {/*this function will vote for the candidate index number*/
         Voter storage sender = voters[msg.sender];
         require(sender.weight != 0, "Has no right to vote");
         require(!sender.voted, "Already voted.");
@@ -102,7 +105,7 @@ contract Ballot {
     }
 
     
-    function winningProposal() public view
+    function winningProposal() public view /*returns the votes which the winning candidate got*/
             returns (uint winningProposal_)
     {
         uint winningVoteCount = 0;
@@ -115,7 +118,7 @@ contract Ballot {
     }
 
     
-    function winnerName() external view
+    function winnerName() external view /*returns the name of the winner*/
             returns (string memory winnerName_)
     {
         winnerName_ = proposals[winningProposal()].name;
