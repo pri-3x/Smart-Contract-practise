@@ -9,20 +9,35 @@ Mappings are not iterable.*/
 
 
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.13;
 
-contract ifelse{
+pragma solidity ^0.8.4;
+
+contract SingleMapping{
+
     mapping(address=>uint)  balance;
 
 
-    function setBalance(address _new, uint a) public{
-        balance[_new]=a;
+    function setmapping(address _a, uint _b )public {
+        balance[_a]=_b;
+
     }
 
-    function Getbalance(address _new) public view returns(uint){
-        return balance[_new];
+    function getmapping(address _a) public view returns (uint){
+        return balance[_a];
+
+    }
+}
+
+contract DoubleMapping{
+    mapping(address=>mapping(uint=>bool)) balance1;
+
+    function setmapping(address _a, uint _b, bool _c) public{
+        balance1[_a][_b]=_c;
     }
 
+    function getmapping(address _a, uint _b) public view returns (bool){
+        return balance1[_a][_b];
+    }
 
 
 }
